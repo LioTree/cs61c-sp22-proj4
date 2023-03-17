@@ -117,8 +117,22 @@ void deallocate_matrix(matrix *mat) {
     // Task 1.3 TODO
     // HINTS: Follow these steps.
     // 1. If the matrix pointer `mat` is NULL, return.
+    if (mat == NULL) {
+        return;
+    }
     // 2. If `mat` has no parent: decrement its `ref_cnt` field by 1. If the `ref_cnt` field becomes 0, then free `mat` and its `data` field.
+    if (mat->parent == NULL) {
+        mat->ref_cnt--;
+        if (mat->ref_cnt == 0) {
+            free(mat->data);
+            free(mat);
+        }
+    }
     // 3. Otherwise, recursively call `deallocate_matrix` on `mat`'s parent, then free `mat`.
+    else {
+        deallocate_matrix(mat->parent);
+        free(mat);
+    }
 }
 
 /*
