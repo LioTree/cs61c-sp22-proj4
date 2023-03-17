@@ -274,6 +274,26 @@ int sub_matrix(matrix *result, matrix *mat1, matrix *mat2) {
  */
 int mul_matrix(matrix *result, matrix *mat1, matrix *mat2) {
     // Task 1.6 TODO
+    if (result->rows != mat1->rows || result->cols != mat2->cols) {
+        return -1;
+    }
+    
+     if (mat1->cols != mat2->rows) { 
+         return -1; 
+     } 
+     
+     int i, j, k; // index variables for row, column and dot product 
+     double sum; // variable for storing dot product 
+     for (i = 0; i < result->rows; i++) { 
+         for (j = 0; j < result->cols; j++) { 
+             result->data[i * result->cols + j] = 0; // initialize sum to zero 
+             for (k = 0; k < mat1->cols; k++) { 
+                 result->data[i * result->cols + j] += mat1->data[i * mat1->cols + k] * mat2->data[k * mat2->cols + j]; // calculate dot product 
+             } 
+         } 
+     } 
+
+     return 0;
 }
 
 /*
@@ -285,4 +305,60 @@ int mul_matrix(matrix *result, matrix *mat1, matrix *mat2) {
  */
 int pow_matrix(matrix *result, matrix *mat, int pow) {
     // Task 1.6 TODO
+    if (result->rows != mat->rows || result->cols != mat->cols) {
+        return -1;
+    }
+
+     if (mat->rows != mat->cols) { 
+         return -1; 
+     } 
+
+     if (pow < 0) { 
+         return -1; 
+     } 
+
+     int i, j; // index variables for row and column 
+     int n = mat->rows; // size of square matrix 
+
+     if (pow == 0) { 
+         for (i = 0; i < n; i++) { 
+             for (j = 0; j < n; j++) { 
+                 if (i == j) { 
+                     result->data[i * n + j] = 1; // set diagonal elements to one 
+                 } else { 
+                     result->data[i * n + j] = 0; // set other elements to zero 
+                 } 
+             } 
+         } 
+
+         return 0;
+     }
+
+      if (pow == 1) { 
+          for (i = 0; i < n * n; i++) { 
+              result->data[i] = mat->data[i]; // copy mat to result element-wise
+          } 
+
+          return 0;
+      }
+
+       matrix *temp = malloc(sizeof(matrix)); // allocate memory for temporary matrix
+       temp->rows = n;
+       temp->cols = n;
+       temp->data = malloc(sizeof(double) * n * n); // allocate memory for data array
+
+       for (i = 0; i < n * n; i++) {
+           temp->data[i] = mat->data[i]; // copy mat to temp element-wise
+       }
+
+       for (i = 2; i <= pow; i++) {
+           mul_matrix(result, temp, mat); // multiply temp and mat and store in result
+           for (j = 0; j < n * n; j++) {
+               temp->data[j] = result->data[j]; // copy result to temp element-wise
+           }
+       }
+
+       free(temp); // free memory allocated for temporary matrix
+
+       return 0;
 }
