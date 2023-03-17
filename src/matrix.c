@@ -49,6 +49,11 @@ void rand_matrix(matrix *result, unsigned int seed, double low, double high) {
  */
 double get(matrix *mat, int row, int col) {
     // Task 1.1 TODO
+    // made by gpt4
+    // Get the index of the element in the data array
+    int index = row * mat->cols + col;
+    // Return the value at that index
+    return mat->data[index];
 }
 
 /*
@@ -57,6 +62,10 @@ double get(matrix *mat, int row, int col) {
  */
 void set(matrix *mat, int row, int col, double val) {
     // Task 1.1 TODO
+    // Get the index of the element in the data array
+    int index = row * mat->cols + col;
+    // Set the value at that index to val
+    mat->data[index] = val;
 }
 
 /*
