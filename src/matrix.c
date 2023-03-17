@@ -81,13 +81,31 @@ int allocate_matrix(matrix **mat, int rows, int cols) {
     // Task 1.2 TODO
     // HINTS: Follow these steps.
     // 1. Check if the dimensions are valid. Return -1 if either dimension is not positive.
+    if (rows <= 0 || cols <= 0) {
+        return -1;
+    }
     // 2. Allocate space for the new matrix struct. Return -2 if allocating memory failed.
+    matrix *new_mat = (matrix *)malloc(sizeof(matrix));
+    if (new_mat == NULL) {
+        return -2;
+    }
     // 3. Allocate space for the matrix data, initializing all entries to be 0. Return -2 if allocating memory failed.
+    new_mat->data = (double *)calloc(rows * cols,sizeof(double));
+    if (new_mat->data == NULL) {
+        free(new_mat);
+        return -2;
+    }
     // 4. Set the number of rows and columns in the matrix struct according to the arguments provided.
+    new_mat->rows = rows;
+    new_mat->cols = cols;
     // 5. Set the `parent` field to NULL, since this matrix was not created from a slice.
+    new_mat->parent = NULL;
     // 6. Set the `ref_cnt` field to 1.
+    new_mat->ref_cnt = 1;
     // 7. Store the address of the allocated matrix struct at the location `mat` is pointing at.
+    *mat = new_mat;
     // 8. Return 0 upon success.
+    return 0;
 }
 
 /*
