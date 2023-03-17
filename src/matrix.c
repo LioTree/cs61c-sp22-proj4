@@ -179,6 +179,10 @@ int allocate_matrix_ref(matrix **mat, matrix *from, int offset, int rows, int co
  */
 void fill_matrix(matrix *mat, double val) {
     // Task 1.5 TODO
+    int size = mat->rows * mat->cols; // total number of elements
+    for (int i = 0; i < size; i++) {
+        mat->data[i] = val;
+    }
 }
 
 /*
@@ -188,6 +192,16 @@ void fill_matrix(matrix *mat, double val) {
  */
 int abs_matrix(matrix *result, matrix *mat) {
     // Task 1.5 TODO
+    if (result->rows != mat->rows || result->cols != mat->cols) {
+        return -1;
+    }
+    
+    int size = result->rows * result->cols;
+    for(int i = 0;i < size;i++){ 
+        result->data[i] = fabs(mat->data[i]); 
+    } 
+    
+    return 0;
 }
 
 /*
@@ -198,6 +212,16 @@ int abs_matrix(matrix *result, matrix *mat) {
  */
 int neg_matrix(matrix *result, matrix *mat) {
     // Task 1.5 TODO
+    if (result->rows != mat->rows || result->cols != mat->cols) {
+        return -1;
+   }
+   
+   int size = result->rows * result->cols;
+   for(int i = 0;i < size;i++){
+       result->data[i] = -(mat->data[i]);
+   }
+   
+   return 0;
 }
 
 /*
@@ -208,6 +232,16 @@ int neg_matrix(matrix *result, matrix *mat) {
  */
 int add_matrix(matrix *result, matrix *mat1, matrix *mat2) {
     // Task 1.5 TODO
+    if (result->rows != mat1->rows || result->cols != mat1->cols || result->rows != mat2->rows || result->cols != mat2->cols) {
+        return -1;
+    }
+    
+     int size = result->rows * result->cols; // total number of elements 
+     for (int i = 0; i < size; i++) { 
+         result->data[i] = mat1->data[i] + mat2->data[i]; 
+     } 
+     
+     return 0; 
 }
 
 /*
@@ -219,6 +253,16 @@ int add_matrix(matrix *result, matrix *mat1, matrix *mat2) {
  */
 int sub_matrix(matrix *result, matrix *mat1, matrix *mat2) {
     // Task 1.5 TODO
+    if (result->rows != mat1->rows || result->cols != mat1->cols || result->rows != mat2->rows || result->cols != mat2->cols) {
+        return -1;
+    }
+    
+     int size = result->rows * result->cols; // total number of elements 
+     for (int i = 0; i < size; i++) { 
+         result->data[i] = mat1->data[i] - mat2->data[i]; 
+     } 
+     
+     return 0; 
 }
 
 /*
